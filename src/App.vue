@@ -1,42 +1,52 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script>
+let id = 0
+
+export default {
+  data() {
+    return {
+      newTodo: '',
+      hideCompleted: false,
+      todos: [
+        { id: id++, text: 'Learn HTML', done: true },
+        { id: id++, text: 'Learn JavaScript', done: true },
+        { id: id++, text: 'Learn Vue', done: false }
+      ]
+    }
+  },
+  computed: {
+    // ...
+  },
+  methods: {
+    addTodo() {
+      this.todos.push({ id: id++, text: this.newTodo, done: false })
+      this.newTodo = ''
+    },
+    removeTodo(todo) {
+      this.todos = this.todos.filter((t) => t !== todo)
+    }
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="Hi there!" />
-    </div>
-  </header>
+  <form @submit.prevent="addTodo">
+    <input v-model="newTodo">
+    <button>Add Todo</button>
+  </form>
+  <ul>
+    <li v-for="todo in todos" :key="todo.id">
+      <input type="checkbox" v-model="todo.done">
+      <span :class="{ done: todo.done }">{{ todo.text }}</span>
+      <button @click="removeTodo(todo)">X</button>
+    </li>
+  </ul>
+  <button @click="hideCompleted = !hideCompleted">
+    {{ hideCompleted ? 'Show all' : 'Hide completed' }}
+  </button>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+.done {
+  text-decoration: line-through;
 }
 </style>
