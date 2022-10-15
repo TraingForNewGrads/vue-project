@@ -54,13 +54,13 @@ export default {
 
 <template>
   <h3>产品列表</h3>
-  <select v-model="selectedProduct">
+  <select id="product-list" v-model="selectedProduct">
     <option v-for="product in products" :value="product.id"> {{ product.name }}</option>
   </select>
-  <div v-if="selectedProduct === 'dread-disease-insurance'">请输入性别：<input v-model="inputParam"></div>
-  <div v-if="selectedProduct === 'property-insurance'">请输入房价：<input v-model="inputParam"></div>
-  <div v-if="selectedProduct === 'health-insurance'">请输入年龄：<input v-model="inputParam"></div>
-  <button @click="submit">提交</button>
+  <div v-if="selectedProduct === 'dread-disease-insurance'">请输入性别：<input id="gender_input" v-model="inputParam"></div>
+  <div v-if="selectedProduct === 'property-insurance'">请输入房价：<input id="value_input" v-model="inputParam"></div>
+  <div v-if="selectedProduct === 'health-insurance'">请输入年龄：<input id="age_input" v-model="inputParam"></div>
+  <button id="submit" @click="submit">提交</button>
 </template>
 
 <style>
